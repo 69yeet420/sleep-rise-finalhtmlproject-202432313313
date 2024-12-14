@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SleepRise - Your Sleep Companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-size: 16px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            font-size: var(--font-size);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark {
+            color: #e0e0e0;
+            background-color: #0f172a;
+        }
+        .light {
+            color: #1f2937;
+            background-color: #f3f4f6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+        header {
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        .dark header {
+            background: #1e293b;
+        }
+        .light header {
+            background: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        header a {
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        .dark header a {
+            color: #ffffff;
+        }
+        .light header a {
+            color: #1f2937;
+        }
+        header .logo-container {
+            display: flex;
+            align-items: center;
+            float: left;
+        }
+        header .logo-image {
+            width: 75px;
+            height: 75px;
+            margin-right: 10px;
+        }
+        header .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        header nav {
+            float: right;
+            display: flex;
+            align-items: center;
+        }
+        header nav ul {
+            display: flex;
+        }
+        header nav ul li {
+            margin-left: 1.5rem;
+            list-style: none;
+        }
+        header .highlight, header .current a {
+            color: #818cf8;
+            font-weight: 600;
+        }
+        header a:hover {
+            color: #818cf8;
+        }
+        .showcase {
+            min-height: 100vh;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/sky.png-gg7HhKY0qdiRhuGkLyx2Vy5By7fm9b.jpeg') no-repeat center center/cover;
+            text-align: center;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .showcase-content {
+            max-width: 800px;
+        }
+        .showcase h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .showcase p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .button {
+            display: inline-block;
+            font-size: 1rem;
+            color: #ffffff;
+            background: #818cf8;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background: #6366f1;
+        }
+        .features {
+            padding: 4rem 0;
+            transition: background-color 0.3s;
+        }
+        .dark .features {
+            background: #1e293b;
+        }
+        .light .features {
+            background: #f3f4f6;
+        }
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, background-color 0.3s;
+            cursor: pointer;
+        }
+        .dark .feature {
+            background: #2a3a53;
+        }
+        .light .feature {
+            background: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        .feature img {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+        .feature h3 {
+            margin-bottom: 1rem;
+            color: #818cf8;
+        }
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .dark footer {
+            background-color: #1e293b;
+        }
+        .light footer {
+            background-color: #f3f4f6;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            width: 80%;
+            max-width: 500px;
+            transition: background-color 0.3s;
+        }
+        .dark .modal-content {
+            background-color: #2a3a53;
+        }
+        .light .modal-content {
+            background-color: #ffffff;
+        }
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .dark .close {
+            color: #aaa;
+        }
+        .light .close {
+            color: #666;
+        }
+        .close:hover,
+        .close:focus {
+            color: #818cf8;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #4b5563;
+            border-radius: 0.375rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark .form-group input,
+        .dark .form-group select {
+            background-color: #374151;
+            color: #e0e0e0;
+        }
+        .light .form-group input,
+        .light .form-group select {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        .profile-logo {
+            display: inline-block;
+            margin-left: 1rem;
+            cursor: pointer;
+        }
+        .profile-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        #sleepAnalysisForm {
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+            transition: background-color 0.3s;
+        }
+        .dark #sleepAnalysisForm {
+            background-color: #2a3a53;
+        }
+        .light #sleepAnalysisForm {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        #sleepAnalysisResult {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+            transition: background-color 0.3s;
+        }
+        .dark #sleepAnalysisResult {
+            background-color: #374151;
+        }
+        .light #sleepAnalysisResult {
+            background-color: #f3f4f6;
+        }
+        .page {
+            display: none;
+            padding-top: 5rem;
+        }
+        .page.active {
+            display: block;
+        }
+        .tips-list, .resources-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .tips-list li, .resources-list li {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        .dark .tips-list li, .dark .resources-list li {
+            background-color: #2a3a53;
+        }
+        .light .tips-list li, .light .resources-list li {
+            background-color: #ffffff;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+        .resources-list a {
+            color: #818cf8;
+            text-decoration: none;
+        }
+        .resources-list a:hover {
+            text-decoration: underline;
+        }
+        .highlighted-tip {
+            border: 2px solid #818cf8;
+        }
+        #settingsModal .modal-content {
+            max-width: 400px;
+        }
+        #settingsModal .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        #settingsModal .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        #settingsModal .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        #settingsModal .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        #settingsModal .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        #settingsModal input:checked + .toggle-slider {
+            background-color: #818cf8;
+        }
+        #settingsModal input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+        #settingsModal .font-size-controls {
+            display: flex;
+            align-items: center;
+        }
+        #settingsModal .font-size-controls button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+        }
+        #profilePicture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        #profilePictureUpload {
+            display: none;
+        }
+        .hidden-tip {
+            display: none;
+        }
+        @media(max-width: 768px) {
+            header .logo-container, header nav, header nav li {
+                float: none;
+                text-align: center;
+            }
+            header {
+                padding-bottom: 1rem;
+            }
+            header nav ul {
+                flex-direction: column;
+            }
+            header nav ul li {
+                margin: 0.5rem 0;
+            }
+            .showcase h1 {
+                font-size: 2rem;
+            }
+        }
+        /* New styles for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .slide-in {
+            animation: slideIn 0.5s ease-in-out;
+        }
+        #welcomeMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(129, 140, 248, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2001;
+            display: none;
+        }
+        #sleepAnalysisResult ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        #sleepAnalysisResult li {
+            margin-bottom: 10px;
+        }
+        #analysisLoading {
+            display: none;
+            text-align: center;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="https://i.ibb.co/mtmsCqm/Sleep-Rise-Logo.png" alt="SleepRise Logo" class="logo-image">
+                <h1 class="logo-text"><span class="highlight">Sleep</span>Rise</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li class="current"><a href="#" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="sleep-analysis">Sleep Analysis</a></li>
+                    <li><a href="#" data-page="personalized-tips">Personalized Tips</a></li>
+                    <li><a href="#" data-page="resources">Resources</a></li>
+                </ul>
+                <div class="profile-logo">
+                    <img src="https://api.dicebear.com/6.x/initials/svg?seed=SR" alt="Profile" id="profileLogoImage">
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="home" class="page active">
+        <section class="showcase">
+            <div class="showcase-content">
+                <h1>Transform Your Sleep Journey</h1>
+                <p>Discover the power of restful nights and energized mornings with SleepRise</p>
+                <a href="#" class="button" id="signUpBtn">Sign Up</a>
+                <a href="#" class="button" id="loginBtn">Log In</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <div class="feature slide-in" data-page="sleep-analysis">
+                    <img src="https://api.iconify.design/mdi:sleep.svg?color=%23818cf8" alt="Sleep Analysis">
+                    <h3>Sleep Analysis</h3>
+                    <p>Get insights into your sleep patterns and quality</p>
+                </div>
+                <div class="feature slide-in" data-page="personalized-tips">
+                    <img src="https://api.iconify.design/mdi:lightbulb-on.svg?color=%23818cf8" alt="Personalized Tips">
+                    <h3>Personalized Tips</h3>
+                    <p>Receive tailored advice to improve your sleep habits</p>
+                </div>
+                <div class="feature slide-in" data-page="resources">
+                    <img src="https://api.iconify.design/mdi:chart-line.svg?color=%23818cf8" alt="Resources">
+                    <h3>Sleep Resources</h3>
+                    <p>Access valuable information to enhance your sleep</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="sleep-analysis" class="page container">
+        <h2>Sleep Analysis</h2>
+        <form id="sleepAnalysisForm">
+            <div class="form-group">
+                <label for="sleepDuration">Average Sleep Duration (hours)</label>
+                <input type="number" id="sleepDuration" name="sleepDuration" min="0" max="24" step="0.5" required>
+            </div>
+            <div class="form-group">
+                <label for="bedtime">Average Bedtime</label>
+                <input type="time" id="bedtime" name="bedtime" required>
+            </div>
+            <div class="form-group">
+                <label for="wakeTime">Average Wake Time</label>
+                <input type="time" id="wakeTime" name="wakeTime" required>
+            </div>
+            <div class="form-group">
+                <label for="phoneUsage">Do you use your phone extensively before sleep?</label>
+                <select id="phoneUsage" name="phoneUsage" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="sometimes">Sometimes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="diet">How would you describe your diet?</label>
+                <select id="diet" name="diet" required>
+                    <option value="">Select an option</option>
+                    <option value="balanced">Balanced</option>
+                    <option value="unhealthy">Unhealthy</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="keto">Keto</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exercise">How often do you exercise?</label>
+                <select id="exercise" name="exercise" required>
+                    <option value="">Select an option</option>
+                    <option value="daily">Daily</option>
+                    <option value="few_times_week">Few times a week</option>
+                    <option value="once_week">Once a week</option>
+                    <option value="rarely">Rarely</option>
+                    <option value="never">Never</option>
+                </select>
+            </div>
+            <button type="submit" class="button">Analyze Sleep</button>
+        </form>
+        <div id="analysisLoading">The AI is analyzing...</div>
+        <div id="sleepAnalysisResult"></div>
+    </div>
+
+    <div id="personalized-tips" class="page container">
+        <h2>Personalized Sleep Tips</h2>
+        <ul class="tips-list">
+            <li id="tip-schedule" class="hidden-tip">
+                <h3>Stick to a Sleep Schedule</h3>
+                <p>Go to bed and wake up at the same time every day, even on weekends. This helps regulate your body's internal clock.</p>
+            </li>
+            <li id="tip-routine" class="hidden-tip">
+                <h3>Create a Bedtime Routine</h3>
+                <p>Develop a relaxing pre-sleep routine, such as reading a book, listening to calming music, or practicing gentle yoga.</p>
+            </li>
+            <li id="tip-environment" class="hidden-tip">
+                <h3>Optimize Your Sleep Environment</h3>
+                <p>Keep your bedroom dark, quiet, and cool. Use comfortable bedding and consider using earplugs or a white noise machine if needed.</p>
+            </li>
+            <li id="tip-screen-time" class="hidden-tip">
+                <h3>Limit Screen Time Before Bed</h3>
+                <p>The blue light from screens can interfere with your sleep. Try to avoid screens for at least an hour before bedtime.</p>
+            </li>
+            <li id="tip-diet" class="hidden-tip">
+                <h3>Watch Your Diet</h3>
+                <p>Avoid large meals, caffeine, and alcohol close to bedtime. These can disrupt your sleep patterns.</p>
+            </li>
+            <li id="tip-exercise" class="hidden-tip">
+                <h3>Exercise Regularly</h3>
+                <p>Regular physical activity can help you fall asleep faster and enjoy deeper sleep. Just avoid vigorous exercise close to bedtime.</p>
+            </li>
+            <li id="tip-stress" class="hidden-tip">
+                <h3>Manage Stress</h3>
+                <p>Practice stress-reduction techniques like meditation or deep breathing exercises to help calm your mind before sleep.</p>
+            </li>
+        </ul>
+    </div>
+
+    <div id="resources" class="page container">
+        <h2>Sleep Resources</h2>
+        <ul class="resources-list">
+            <li>
+                <h3>National Sleep Foundation</h3>
+                <p>Comprehensive information on sleep health and sleep disorders.</p>
+                <a href="https://www.sleepfoundation.org/" target="_blank">Visit Website</a>
+            </li>
+            <li>
+                <h3>CDC - Sleep and Sleep Disorders</h3>
+                <p>Information on sleep health, common sleep disorders, and tips for better sleep from the Centers for Disease Control and Prevention.</p>
+                <a href="https://www.cdc.gov/sleep/index.html" target="_blank">Visit Website</a>
+            </li>
+            <li>
+                <h3>Harvard Health - Importance of Sleep</h3>
+                <p>Expert insights on the crucial role of sleep in overall health and well-being.</p>
+                <a href="https://www.health.harvard.edu/topics/sleep" target="_blank">Visit Website</a>
+            </li>
+            <li>
+                <h3>Sleep.gov</h3>
+                <p>Official government resource for information on sleep and sleep disorders.</p>
+                <a href="https://www.nhlbi.nih.gov/health-topics/education-and-awareness/sleep-health" target="_blank">Visit Website</a>
+            </li>
+            <li>
+                <h3>American Academy of Sleep Medicine</h3>
+                <p>Professional society dedicated to sleep medicine, offering resources for both patients and healthcare providers.</p>
+                <a href="https://aasm.org/" target="_blank">Visit Website</a>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SleepRise. All rights reserved.</p>
+    </footer>
+
+    <div id="signUpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Sign Up for SleepRise</h2>
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signupUsername">Username</label>
+                    <input type="text" id="signupUsername" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required>
+                </div>
+                <button type="submit" class="button">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Log In to SleepRise</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="button">Log In</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+            <div class="settings-option">
+                <img id="profilePicture" src="https://api.dicebear.com/6.x/initials/svg?seed=SR" alt="Profile Picture">
+                <input type="file" id="profilePictureUpload" accept="image/*">
+                <label for="profilePictureUpload" class="button" style="font-size: 0.8rem; padding: 0.5rem 1rem;">Change Photo</label>
+            </div>
+            <div class="settings-option">
+                <label for="darkModeToggle">Dark Mode</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="settings-option">
+                <label>Font Size</label>
+                <div class="font-size-controls">
+                    <button id="decreaseFontSize">-</button>
+                    <span id="currentFontSize">16px</span>
+                    <button id="increaseFontSize">+</button>
+                </div>
+            </div>
+            <div class="settings-option">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <button id="updateUsername" class="button">Update Username</button>
+            <button id="logoutButton" class="button">Log Out</button>
+        </div>
+    </div>
+
+    <div id="welcomeMessage" class="fade-in"></div>
+
+    <script>
+        // Local Storage Functions
+        function saveToLocalStorage(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        function getFromLocalStorage(key) {
+            const value = localStorage.getItem(key);
+            return value ? JSON.parse(value) : null;
+        }
+
+        // User state
+        let isLoggedIn = getFromLocalStorage('isLoggedIn') || false;
+        let userData = getFromLocalStorage('userData') || {};
+
+        // Get the modals
+        var signUpModal = document.getElementById("signUpModal");
+        var loginModal = document.getElementById("loginModal");
+        var settingsModal = document.getElementById("settingsModal");
+
+        // Get the buttons that open the modals
+        var signUpBtn = document.getElementById("signUpBtn");
+        var loginBtn = document.getElementById("loginBtn");
+
+        // Get the <span> elements that close the modals
+        var closeBtns = document.getElementsByClassName("close");
+
+        // When the user clicks the button, open the respective modal 
+        signUpBtn.onclick = function() {
+            signUpModal.style.display = "block";
+        }
+
+        loginBtn.onclick = function() {
+            loginModal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modals
+        for (var i = 0; i < closeBtns.length; i++) {
+            closeBtns[i].onclick = function() {
+                signUpModal.style.display = "none";
+                loginModal.style.display = "none";
+                settingsModal.style.display = "none";
+            }
+        }
+
+        // When the user clicks anywhere outside of the modals, close them
+        window.onclick = function(event) {
+            if (event.target == signUpModal) {
+                signUpModal.style.display = "none";
+            }
+            if (event.target == loginModal) {
+                loginModal.style.display = "none";
+            }
+            if (event.target == settingsModal) {
+                settingsModal.style.display = "none";
+            }
+        }
+
+        // Sign Up Form submission
+        document.getElementById("signUpForm").onsubmit = function(e) {
+            e.preventDefault();
+            const username = document.getElementById("signupUsername").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+            
+            // Save user data
+            userData = { username, email, password };
+            saveToLocalStorage('userData', userData);
+            
+            // Set logged in state
+            isLoggedIn = true;
+            saveToLocalStorage('isLoggedIn', isLoggedIn);
+            
+            // Update UI
+            updateUIForLoggedInUser();
+            signUpModal.style.display = "none";
+            showWelcomeMessage(username);
+        }
+
+        // Login Form submission
+        document.getElementById("loginForm").onsubmit = function(e) {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            
+            // Check if credentials match
+            if (userData.email === email && userData.password === password) {
+                isLoggedIn = true;
+                saveToLocalStorage('isLoggedIn', isLoggedIn);
+                updateUIForLoggedInUser();
+                loginModal.style.display = "none";
+                showWelcomeMessage(userData.username);
+            } else {
+                alert("Invalid credentials. Please try again.");
+            }
+        }
+
+        function updateUIForLoggedInUser() {
+            signUpBtn.style.display = "none";
+            loginBtn.style.display = "none";
+            showProfileLogo();
+            document.getElementById("username").value = userData.username || "";
+        }
+
+        function showProfileLogo() {
+            var profileLogo = document.querySelector(".profile-logo");
+            profileLogo.style.display = "inline-block";
+        }
+
+        // Profile logo click event
+        document.querySelector(".profile-logo").addEventListener("click", function() {
+            settingsModal.style.display = "block";
+        });
+
+        // Sleep Analysis Form Submission
+        document.getElementById("sleepAnalysisForm").onsubmit = function(e) {
+            e.preventDefault();
+            var sleepDuration = parseFloat(document.getElementById("sleepDuration").value);
+            var bedtime = document.getElementById("bedtime").value;
+            var wakeTime = document.getElementById("wakeTime").value;
+            var phoneUsage = document.getElementById("phoneUsage").value;
+            var diet = document.getElementById("diet").value;
+            var exercise = document.getElementById("exercise").value;
+
+            // Show loading message
+            document.getElementById("analysisLoading").style.display = "block";
+            document.getElementById("sleepAnalysisResult").style.display = "none";
+
+            // Simulate AI analysis delay
+            setTimeout(function() {
+                var result = analyzeSleep(sleepDuration, bedtime, wakeTime, phoneUsage, diet, exercise);
+                document.getElementById("analysisLoading").style.display = "none";
+                document.getElementById("sleepAnalysisResult").innerHTML = result.advice;
+                document.getElementById("sleepAnalysisResult").style.display = "block";
+                showRelevantTips(result.highlightedTips);
+            }, 1500);
+        }
+
+        function analyzeSleep(duration, bedtime, wakeTime, phoneUsage, diet, exercise) {
+            let advice = "";
+            let quality = calculateSleepQuality(duration, bedtime, wakeTime);
+            let highlightedTips = [];
+
+            advice += `<h3>Here's your analysis, ${userData.username}:</h3>`;
+            advice += `<ul>`;
+            advice += `<li>Based on your input, your estimated sleep quality is ${quality} out of 10.</li>`;
+
+            if (duration < 7) {
+                advice += "<li>Your sleep duration is below the recommended 7-9 hours for adults. Consider going to bed earlier or waking up later if possible.</li>";
+                highlightedTips.push("tip-schedule");
+            } else if (duration > 9) {
+                advice += "<li>You're sleeping more than the recommended 7-9 hours for adults. While this isn't necessarily bad, it might be worth checking if you're feeling overly tired during the day.</li>";
+                highlightedTips.push("tip-schedule");
+            } else {
+                advice += "<li>Your sleep duration is within the recommended range of 7-9 hours for adults. Great job!</li>";
+            }
+
+            let bedtimeHour = parseInt(bedtime.split(':')[0]);
+            let bedtimeMinute = parseInt(bedtime.split(':')[1]);
+            let wakeTimeHour = parseInt(wakeTime.split(':')[0]);
+            let wakeTimeMinute = parseInt(wakeTime.split(':')[1]);
+
+            // Convert bedtime to 24-hour format if it's PM
+            if (bedtimeHour < wakeTimeHour || (bedtimeHour === wakeTimeHour && bedtimeMinute < wakeTimeMinute)) {
+                bedtimeHour += 24;
+            }
+
+            let sleepStart = bedtimeHour * 60 + bedtimeMinute;
+            let sleepEnd = wakeTimeHour * 60 + wakeTimeMinute;
+            let optimalSleepStart = 22 * 60; // 10 PM
+            let optimalSleepEnd = 6 * 60; // 6 AM
+
+            if (sleepStart < optimalSleepStart || sleepStart > (optimalSleepStart + 120)) {
+                advice += "<li>Your bedtime is outside the typical range for a healthy sleep schedule. Aim for a bedtime between 10 PM and 12 AM for optimal sleep quality.</li>";
+                highlightedTips.push("tip-routine");
+            } else {
+                advice += "<li>Your bedtime is within a healthy range. Keep it up!</li>";
+            }
+
+            if (sleepEnd < optimalSleepEnd || sleepEnd > (optimalSleepEnd + 120)) {
+                advice += "<li>Your wake time is outside the typical range for a healthy sleep schedule. Aim to wake up between 6 AM and 8 AM for optimal alertness throughout the day.</li>";
+                highlightedTips.push("tip-routine");
+            } else {
+                advice += "<li>Your wake time is within a healthy range. Great job maintaining a consistent schedule!</li>";
+            }
+
+            if (phoneUsage === 'yes' || phoneUsage === 'sometimes') {
+                advice += "<li>Using your phone before bed can negatively impact your sleep quality. Try to limit screen time before bed.</li>";
+                highlightedTips.push("tip-screen-time");
+            }
+
+            if (diet === 'unhealthy') {
+                advice += "<li>An unhealthy diet can affect your sleep quality. Consider improving your eating habits for better sleep.</li>";
+                highlightedTips.push("tip-diet");
+            }
+
+            if (exercise === 'rarely' || exercise === 'never') {
+                advice += "<li>Regular exercise can significantly improve sleep quality. Try to incorporate more physical activity into your routine.</li>";
+                highlightedTips.push("tip-exercise");
+            }
+
+            if (quality < 5) {
+                advice += "<li>Your sleep quality could be improved. Check out the personalized tips we've highlighted for you.</li>";
+                highlightedTips.push("tip-environment", "tip-stress");
+            }
+
+            advice += "</ul>";
+            advice += "<p>For more detailed information and personalized advice, check out our <a href='#' data-page='personalized-tips'>Personalized Tips</a> section.</p>";
+
+            return { advice, highlightedTips };
+        }
+
+        function calculateSleepQuality(duration, bedtime, wakeTime) {
+            let quality = 7; // Start with an average quality
+
+            // Adjust based on duration
+            if (duration < 6 || duration > 10) quality -= 2;
+            else if (duration < 7 || duration > 9) quality -= 1;
+
+            // Adjust based on bedtime and wake time
+            let bedtimeHour = parseInt(bedtime.split(':')[0]);
+            let wakeTimeHour = parseInt(wakeTime.split(':')[0]);
+
+            if (bedtimeHour < 21 || bedtimeHour > 1) quality -= 1;
+            if (wakeTimeHour < 5 || wakeTimeHour > 9) quality -= 1;
+
+            // Ensure quality is between 1 and 10
+            return Math.max(1, Math.min(10, quality));
+        }
+
+        function showRelevantTips(tipIds) {
+            // Hide all tips
+            document.querySelectorAll('.tips-list li').forEach(tip => {
+                tip.classList.add('hidden-tip');
+                tip.classList.remove('highlighted-tip');
+            });
+
+            // Show and highlight relevant tips
+            tipIds.forEach(tipId => {
+                const tip = document.getElementById(tipId);
+                if (tip) {
+                    tip.classList.remove('hidden-tip');
+                    tip.classList.add('highlighted-tip');
+                }
+            });
+        }
+
+        // Page navigation
+        document.querySelectorAll('nav a, .feature, a[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(page).classList.add('active');
+                document.querySelectorAll('nav a').forEach(a => a.parentElement.classList.remove('current'));
+                const navLink = document.querySelector(`nav a[data-page="${page}"]`);
+                if (navLink) {
+                    navLink.parentElement.classList.add('current');
+                }
+            });
+        });
+
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('change', function() {
+            document.documentElement.classList.toggle('light');
+            document.documentElement.classList.toggle('dark');
+        });
+
+        // Font size controls
+        const decreaseFontSize = document.getElementById('decreaseFontSize');
+        const increaseFontSize = document.getElementById('increaseFontSize');
+        const currentFontSize = document.getElementById('currentFontSize');
+
+        function updateFontSize(change) {
+            let size = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--font-size'));
+            size += change;
+            document.documentElement.style.setProperty('--font-size', `${size}px`);
+            currentFontSize.textContent = `${size}px`;
+        }
+
+        decreaseFontSize.addEventListener('click', () => updateFontSize(-1));
+        increaseFontSize.addEventListener('click', () => updateFontSize(1));
+
+        // Update username
+        const updateUsernameButton = document.getElementById('updateUsername');
+        updateUsernameButton.addEventListener('click', function() {
+            const newUsername = document.getElementById('username').value;
+            userData.username = newUsername;
+            saveToLocalStorage('userData', userData);
+            alert(`Username updated to: ${newUsername}`);
+        });
+
+        // Logout
+        const logoutButton = document.getElementById('logoutButton');
+        logoutButton.addEventListener('click', function() {
+            isLoggedIn = false;
+            saveToLocalStorage('isLoggedIn', isLoggedIn);
+            signUpBtn.style.display = "inline-block";
+            loginBtn.style.display = "inline-block";
+            document.querySelector(".profile-logo").style.display = "none";
+            alert('You have been logged out.');
+            window.location.href = '#';
+        });
+
+        // Profile picture upload
+        const profilePictureUpload = document.getElementById('profilePictureUpload');
+        const profilePicture = document.getElementById('profilePicture');
+        const profileLogoImage = document.getElementById('profileLogoImage');
+
+        profilePictureUpload.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePicture.src = e.target.result;
+                    profileLogoImage.src = e.target.result;
+                    userData.profilePicture = e.target.result;
+                    saveToLocalStorage('userData', userData);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Initialize UI based on login state
+        if (isLoggedIn) {
+            updateUIForLoggedInUser();
+        }
+
+        // Load user data
+        if (userData.profilePicture) {
+            profilePicture.src = userData.profilePicture;
+            profileLogoImage.src = userData.profilePicture;
+        }
+
+        // Welcome message function
+        function showWelcomeMessage(username) {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.textContent = `Welcome, ${username}!`;
+            welcomeMessage.style.display = 'block';
+            setTimeout(() => {
+                welcomeMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        // Add animation classes to features
+        document.querySelectorAll('.feature').forEach((feature, index) => {
+            feature.style.animationDelay = `${index * 0.2}s`;
+        });
+    </script>
+</body>
+</html>
